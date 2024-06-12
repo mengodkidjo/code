@@ -14,15 +14,15 @@
 
     "content_scripts": [
         {
-            "matches": ["*://stackoverflow.com/questions/*"],
+            "matches": ["https://stackoverflow.com/questions/*"],
             "js": ["js/content_script.js"],
             "css": ["css/content_css.css"]
         }
     ],
     "web_accessible_resources": [
         {
-            "resources" : [ "images/logo_long.png", "images/check.png", "images/minus.jpg", "icons/logo-48.png", "images/copy.png" ],
-            "matches": ["*://stackoverflow.com/questions/*"]
+            "matches": ["<all_urls>"],
+            "resources" : [ "images/logo_long.png", "images/check.png", "images/minus.jpg", "icons/logo-48.png", "images/copy.png" ]
 
         }
     ]

@@ -1,8 +1,8 @@
-
+const b = typeof chrome !== 'undefined' ? chrome : (typeof browser !== 'undefined' ? browser : null);
  (() => {
 
     if(window.hasRun){
-        console.log("here ?");
+        // console.log("here ?");
         return;
       }
     
@@ -41,7 +41,7 @@ function goToAcceptedAnswer(element) {
 
 function switchAnswerHighliter(currentElement){
     const existant = document.getElementsByClassName("stackanswer-answer");
-    console.log(existant);
+    // console.log(existant);
     if(existant.length != 0){
         existant[0].classList.remove("stackanswer-answer");
     }
@@ -89,8 +89,8 @@ function acceptedAnswerExist() {
 
 
 function showUi() {
-    const logo = browser.runtime.getURL("images/logo_long.png");
-    const checkLogo = browser.runtime.getURL("images/check.png");
+    const logo =  b.runtime.getURL("images/logo_long.png") ;
+    const checkLogo = b.runtime.getURL("images/check.png");
     const acceptedAnswerExists = acceptedAnswerExist();
     const checkIconClass = acceptedAnswerExists ? '' : 'stackanswer-hide';
     const activeClass = acceptedAnswerExists ? 'stackanswer-active' : '';
@@ -104,7 +104,7 @@ function showUi() {
         <div class='stackanswer-position'>
             <div id='stackanswer-container-div' class='stackanswer-container'>  
                 <div class='stackanswer-img-div'> 
-                    <img src='${browser.runtime.getURL("images/minus.jpg")}' id='minus-icon' width='12px' height='12px'>
+                    <img src='${b.runtime.getURL("images/minus.jpg")  }' id='minus-icon' width='12px' height='12px'>
                     <img src='${logo}' class='stackanswer-logo' width = '120px'>
                 </div> 
                 <div id='stackanswer-content-div'>  
@@ -145,7 +145,7 @@ function showUi() {
             </div>
             <div id='stackanswer-about' class= 'stackanswer-container'>
                 <div class='stackanswer-img-div'> 
-                    <img src='${browser.runtime.getURL("icons/logo-48.png")}'  width='24px' height='24px'>
+                    <img src='${b.runtime.getURL("icons/logo-48.png")}'  width='24px' height='24px'>
                     <h2>About StackAnswer</h2>
                 </div>
                 <p>Developed by <strong>  <a href='https://ledocdev.com' target='_blank'>Darrell KIDJO</a></strong> - <strong>Software Engineer</strong> available for freelance or remote missions. <a href='https://ledocdev.com/#contact' target='_blank'>Contact me</a>.</p>
@@ -231,7 +231,7 @@ function shoCopyButton() {
         if (element.getElementsByClassName("stackanswer-copy-button").length === 0) {  // Pour éviter les doublons
             const copyButton = document.createElement("div");
             const copyImg = document.createElement("img")
-            copyImg.src = browser.runtime.getURL("images/copy.png");
+            copyImg.src = b.runtime.getURL("images/copy.png");
             copyImg.width = 24;
             copyImg.height = 24;
             copyImg.style.opacity = 0.5
