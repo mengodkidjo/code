@@ -220,7 +220,61 @@ function showUi() {
       autoScrollCheckbox.addEventListener("change", (event) => {
           localStorage.setItem('stackanswer-autoscroll-enabled', event.target.checked);
       });
+
+      shoCopyButton();
+
 }
+
+function shoCopyButton() {
+    const codeBoxes = document.getElementsByClassName("s-code-block");
+    for (let element of codeBoxes) {
+        if (element.getElementsByClassName("stackanswer-copy-button").length === 0) {  // Pour éviter les doublons
+            const copyButton = document.createElement("div");
+            const copyImg = document.createElement("img")
+            copyImg.src = browser.runtime.getURL("images/copy.png");
+            copyImg.width = 24;
+            copyImg.height = 24;
+            copyImg.style.opacity = 0.5
+            
+            copyButton.className = "stackanswer-copy-button";
+            copyButton.style.position = "absolute";
+            copyButton.style.top = "10px";
+            copyButton.style.right = "10px";
+            copyButton.style.padding = "5px";
+            copyButton.style.background = "#E0E0E0";
+            copyButton.style.color = "white";
+            copyButton.style.border = "none";
+            copyButton.style.borderRadius = "6px";
+            copyButton.style.cursor = "pointer";
+            copyButton.style.display = "none";
+            copyImg.style.display = "none";
+            copyButton.addEventListener("click", () => {
+                const codeText = element.innerText;
+               
+                navigator.clipboard.writeText(codeText).then(() => {
+                    // copyButton.innerText = "Copied!";
+                    setTimeout(() => {
+                        // copyButton.innerText = "Copy";
+                    }, 2000);
+                }).catch(err => {
+                    console.error("Failed to copy text: ", err);
+                });
+            });
+            copyButton.appendChild(copyImg)
+            element.style.position = "relative";
+            element.appendChild(copyButton);
+            element.addEventListener('mouseover', ()=> {
+                copyButton.style.display = "block";
+                copyImg.style.display = "block";
+            })
+            element.addEventListener('mouseout', ()=> {
+                copyButton.style.display = "none";
+                copyImg.style.display = "none";
+            })
+        }
+    }
+}
+
 
 
 

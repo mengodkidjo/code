@@ -21,7 +21,7 @@
     ],
     "web_accessible_resources": [
         {
-            "resources" : [ "images/logo_long.png", "images/check.png", "images/minus.jpg", "icons/logo-48.png" ],
+            "resources" : [ "images/logo_long.png", "images/check.png", "images/minus.jpg", "icons/logo-48.png", "images/copy.png" ],
             "matches": ["*://stackoverflow.com/questions/*"]
 
         }
