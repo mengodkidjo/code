@@ -1,14 +1,24 @@
-.stackanswer-container {
+.stackanswer-position {
     position: fixed;
     right: 1%;
+    top: 10%;
+}
+.stackanswer-container {
+   
     background-color: rgb(251, 251, 251, 0.95);
     padding: 16px;
     border-radius: 16px;
-    top: 10%;
-    margin: 8px;
+   
+    /* margin: 8px; */
     border: 2px solid #ddd;
     width: 250px;
+    font-size: 12px;
 }
+
+#stackanswer-about{
+    margin-top: 8px;
+}
+
 
 .stackanswer-img-div{
     display: flex;
@@ -20,15 +30,15 @@
     margin-right: auto;
 }
 .stackanswer-action {
-    border: 2px solid;
+    border: 1px solid;
     color: rgb(46, 39, 36);
     border-radius: 8px;
     display: flex;
     padding: 8px;
     margin-bottom: 8px;
     cursor: pointer;
-
 }
+
 
 .stackanswer-action label {
     cursor: pointer;
@@ -41,7 +51,7 @@
     border-radius: 8px;
     display: flex;
     color: rgb(218, 118, 45);
-    border: 2px solid;
+    border: 1px solid;
 
 }
 
@@ -64,4 +74,33 @@
     color: rgb(11, 98, 174);
     cursor: pointer;
     font-weight: bold;
+}
+
+.text-center {
+    text-align: center;
+}
+
+
+#minus-icon {
+    position: absolute;
+  left: 8px;
+  top: 8px;
+}
+
+.stackanswer-settings {
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-top: 1px solid #ddd;
+    margin-top: 10px;
+    text-align: left;
+}
+
+.stackanswer-settings label {
+    font-size: 0.9em;
+    display: flex;
+    align-items: center;
+}
+
+.stackanswer-settings input[type='checkbox'] {
+    margin-right: 10px;
 }

@@ -20,12 +20,14 @@
  })(); 
 
 function pageLoad() {
-
-    let acceptedAnswer = acceptedAnswerExist();
-    if(acceptedAnswer){
-        goToAcceptedAnswer(acceptedAnswer)
-    } else {
-        goToMostVotedAnswer();
+    const autoScrollEnabled = localStorage.getItem('stackanswer-autoscroll-enabled') === 'true' || undefined;
+    if (autoScrollEnabled) {
+        let acceptedAnswer = acceptedAnswerExist();
+        if(acceptedAnswer){
+            goToAcceptedAnswer(acceptedAnswer)
+        } else {
+            goToMostVotedAnswer();
+        }
     }
 }
 
@@ -89,23 +91,45 @@ function acceptedAnswerExist() {
 function showUi() {
     const logo = browser.runtime.getURL("images/logo_long.png");
     const checkLogo = browser.runtime.getURL("images/check.png");
-    let checkIconClass = ''
-    let activeClass = 'stackanswer-active'
-    let default2CheckIconClass = 'stackanswer-hide'
-    let default2ActiveClass = ''
-    if(!acceptedAnswerExist()){
-        checkIconClass = 'stackanswer-hide'
-        activeClass = ''
+    const acceptedAnswerExists = acceptedAnswerExist();
+    const checkIconClass = acceptedAnswerExists ? '' : 'stackanswer-hide';
+    const activeClass = acceptedAnswerExists ? 'stackanswer-active' : '';
+    const default2CheckIconClass = acceptedAnswerExists ? 'stackanswer-hide' : '';
+    const default2ActiveClass = acceptedAnswerExists ? '' : 'stackanswer-active';
 
-         default2CheckIconClass = ''
-         default2ActiveClass = 'stackanswer-active'
-    } 
-    console.log(logo);
-    let ui = "<div class='stackanswer-container'> <div class='stackanswer-img-div'><img src='"+logo+"' class='stackanswer-logo' width = '120px'></div><p>Use this filters to browse the most relevant answers</p><div> <div id='stackanswer-action-accepted' class='"+activeClass+" stackanswer-action'><img id='stackanswer-check-icon-1' src='"+checkLogo+"' width='16px' class='"+checkIconClass+"'> <label>Jump to <strong> Accepted answer </strong></label> </div> <div id='stackanswer-action-voted' class='"+default2ActiveClass+" stackanswer-action'><img id='stackanswer-check-icon-2' class='"+default2CheckIconClass+"' src='"+checkLogo+"' width='16px' > <label >Jump to  <strong>Most voted </strong></label> </div></div>";
+    // 
+
+    //stack answer Ui definition
+    let ui = `
+        <div class='stackanswer-position'>
+            <div id='stackanswer-container-div' class='stackanswer-container'>  
+                <div class='stackanswer-img-div'> 
+                    <img src='${browser.runtime.getURL("images/minus.jpg")}' id='minus-icon' width='12px' height='12px'>
+                    <img src='${logo}' class='stackanswer-logo' width = '120px'>
+                </div> 
+                <div id='stackanswer-content-div'>  
+                    <p class='text-center'>Use this filters to browse the most relevant answers</p>
+                    <div id='stackanswer-settings' class='stackanswer-settings'>
+                    <label>
+                            <input type='checkbox' id='stackanswer-autoscroll-checkbox' ${localStorage.getItem('stackanswer-autoscroll-enabled') === 'false' ? '' : 'checked'}>
+                            Enable auto scroll to the most relevant answer
+                        </label>
+                    </div>
+                    <div> 
+                        <div id='stackanswer-action-accepted' class='${activeClass} stackanswer-action'>
+                            <img id='stackanswer-check-icon-1' src='${checkLogo}' width='16px' class='${checkIconClass}'> 
+                            <label>Jump to <strong> Accepted answer </strong></label> 
+                        </div> 
+                        <div id='stackanswer-action-voted' class='${default2ActiveClass} stackanswer-action'>
+                            <img id='stackanswer-check-icon-2' class='${default2CheckIconClass}' src='${checkLogo}' width='16px' > 
+                            <label >Jump to  <strong>Most voted </strong></label> 
+                        </div>
+                    </div>
+        
+        `;
     
     let questionHeader = document.getElementById("question-header");
     let text = questionHeader.getElementsByTagName("h1")[0].innerText;
-    console.log();
     let content = document.getElementsByClassName('js-post-body');
     var contenu = "";
     if(content.length != 0){
@@ -113,12 +137,29 @@ function showUi() {
         contenu = contenu.substring(0, contenu.length * 0.65)
         contenu +="..."; 
     }
-    let nextContent = '<blockquote><strong id="stackanswer-link">'+text+'</strong><p>'+contenu+'</p></blockquote></div>';
+    let nextContent = `
+                    <blockquote><strong id="stackanswer-link">${text}</strong>
+                        <p>${contenu}</p>
+                    </blockquote> 
+                </div>
+            </div>
+            <div id='stackanswer-about' class= 'stackanswer-container'>
+                <div class='stackanswer-img-div'> 
+                    <img src='${browser.runtime.getURL("icons/logo-48.png")}'  width='24px' height='24px'>
+                    <h2>About StackAnswer</h2>
+                </div>
+                <p>Developed by <strong>  <a href='https://ledocdev.com' target='_blank'>Darrell KIDJO</a></strong> - <strong>Software Engineer</strong> available for freelance or remote missions. <a href='https://ledocdev.com/#contact' target='_blank'>Contact me</a>.</p>
+                <p>Discover <a  href='https://serverexplorer.ledocdev.com' target='_blank'> Server Explorer</a>, an ssh client with UI, file and docker manager, by me.</p>
+                <h4><strong>Thank you for using my tools ;)</strong></h4>
+            </div>
+        </div>`;
 
     document.body.innerHTML += (ui+nextContent);
 
     const accpetedAction =  document.getElementById("stackanswer-action-accepted");
     const votedAction =  document.getElementById("stackanswer-action-voted");
+
+    //Handle click event on button : Jump to accepted answer
 
     accpetedAction.addEventListener("click", (event)=>{
         if(acceptedAnswerExist()){
@@ -137,6 +178,8 @@ function showUi() {
        
     });
 
+    //Handle click event on button : Jump to Most Voted answer
+
     votedAction.addEventListener("click", (event)=>{
         if(!votedAction.classList.contains("stackanswer-active")){
             votedAction.classList.add("stackanswer-active")
@@ -151,10 +194,33 @@ function showUi() {
     question.addEventListener("click", (event)=>{
         window.scrollTo(0,0)
     });
+
+    //Reduce stackanswer box
+    const minusIcon = document.getElementById("minus-icon");
+    minusIcon.addEventListener("click", (e) => {
+        let divContainer = document.getElementById("stackanswer-container-div");
+        if(divContainer.style.height != "60px"){
+
+            divContainer.style.height = "60px";
+            document.getElementById("stackanswer-content-div").style.display = 'none';
+            document.getElementById("stackanswer-about").style.display = 'none';
+            
+        } else {
+            divContainer.style.height = null;
+
+            document.getElementById("stackanswer-content-div").style.display = 'block';
+            document.getElementById("stackanswer-about").style.display = 'block';
+
+
+        }
+    })
+
+      // Handle auto-scroll checkbox
+      const autoScrollCheckbox = document.getElementById("stackanswer-autoscroll-checkbox");
+      autoScrollCheckbox.addEventListener("change", (event) => {
+          localStorage.setItem('stackanswer-autoscroll-enabled', event.target.checked);
+      });
 }
 
-   
-
-    
 
 
