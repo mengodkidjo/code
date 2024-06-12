@@ -7,11 +7,24 @@
         "48": "icons/logo-48.png",
         "96": "icons/logo-96.png"
     },
+    "permissions": ["notifications"],
+    "host_permissions": [
+        "*://stackoverflow.com/questions/*"
+      ],
+
     "content_scripts": [
         {
             "matches": ["*://stackoverflow.com/questions/*"],
-            "js": ["js/content_scripts.js"]
+            "js": ["js/content_script.js"],
+            "css": ["css/content_css.css"]
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources" : [ "images/logo_long.png", "images/check.png"  ],
+            "matches": ["*://stackoverflow.com/questions/*"]
+
         }
     ]
-
+ 
 }
