@@ -252,9 +252,9 @@ function shoCopyButton() {
                 const codeText = element.innerText;
                
                 navigator.clipboard.writeText(codeText).then(() => {
-                    // copyButton.innerText = "Copied!";
+                    copyImg.src = b.runtime.getURL("images/check.png");
                     setTimeout(() => {
-                        // copyButton.innerText = "Copy";
+                        copyImg.src = b.runtime.getURL("images/copy.png");
                     }, 2000);
                 }).catch(err => {
                     console.error("Failed to copy text: ", err);
