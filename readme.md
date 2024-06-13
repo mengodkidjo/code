@@ -1,4 +1,4 @@
-#StackAnswer
+# StackAnswer
 
 StackAnswer is a browser extension that enhances your experience on Stack Overflow. It allows you to scroll directly to the answer with either the checkmark or the most votes, with that answer highlighted. With also the possibility to copy code directly in clipboard and activate or desactive auto scrolling.
 
