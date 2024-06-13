@@ -1,12 +1,12 @@
 const b = typeof chrome !== 'undefined' ? chrome : (typeof browser !== 'undefined' ? browser : null);
  (() => {
 
-    if(window.hasRun){
-        // console.log("here ?");
-        return;
-      }
+    // if(window.hasRun){
+    //     // console.log("here ?");
+    //     return;
+    //   }
     
-    window.hasRun = true;
+    // window.hasRun = true;
 
     let alreadyRunPageLoad = false;
     window.onload = function () {
@@ -225,7 +225,7 @@ function showUi() {
 }
 
 function shoCopyButton() {
-    const codeBoxes = document.getElementsByClassName("s-code-block");
+    const codeBoxes = document.getElementsByTagName("pre");
     for (let element of codeBoxes) {
         if (element.getElementsByClassName("stackanswer-copy-button").length === 0) {  // Pour éviter les doublons
             const copyButton = document.createElement("div");
