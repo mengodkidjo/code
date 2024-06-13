@@ -145,8 +145,7 @@ function showUi() {
             </div>
             <div id='stackanswer-about' class= 'stackanswer-container'>
                 <div class='stackanswer-img-div'> 
-                    <img src='${b.runtime.getURL("icons/logo-48.png")}'  width='24px' height='24px'>
-                    <h2>About StackAnswer</h2>
+                    <h2>About</h2>
                 </div>
                 <p>Developed by <strong>  <a href='https://ledocdev.com' target='_blank'>Darrell KIDJO</a></strong> - <strong>Software Engineer</strong> available for freelance or remote missions. <a href='https://ledocdev.com/#contact' target='_blank'>Contact me</a>.</p>
                 <p>Discover <a  href='https://serverexplorer.ledocdev.com' target='_blank'> Server Explorer</a>, an ssh client with UI, file and docker manager, by me.</p>
@@ -234,14 +233,14 @@ function shoCopyButton() {
             copyImg.src = b.runtime.getURL("images/copy.png");
             copyImg.width = 24;
             copyImg.height = 24;
-            copyImg.style.opacity = 0.5
+            copyImg.style.opacity = 0.9
             
             copyButton.className = "stackanswer-copy-button";
             copyButton.style.position = "absolute";
             copyButton.style.top = "10px";
             copyButton.style.right = "10px";
             copyButton.style.padding = "5px";
-            copyButton.style.background = "#E0E0E0";
+            copyButton.style.background = "rgba(218,118,45, 0.14)";
             copyButton.style.color = "white";
             copyButton.style.border = "none";
             copyButton.style.borderRadius = "6px";
