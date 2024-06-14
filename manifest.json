@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "StackAnswer",
-    "version": "1.0",
+    "version": "1.1",
     "description": "StackAnswer is a browser extension that allows users on stackoverflow to go directly to the most relevant answer.",
     "homepage_url": "https://github.com/mengodkidjo/stackanswer",
     "icons": {
