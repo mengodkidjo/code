@@ -148,8 +148,8 @@ function showUi() {
                 <div class='stackanswer-img-div'> 
                     <h2>About</h2>
                 </div>
-                <p>Developed by <strong>  <a href='https://ledocdev.com' target='_blank'>Darrell KIDJO</a></strong> - <strong>Software Engineer</strong> available for freelance or remote missions. <a href='https://ledocdev.com/#contact' target='_blank'>Contact me</a>.</p>
-                <p>Discover <a  href='https://serverexplorer.ledocdev.com' target='_blank'> Server Explorer</a>, an ssh client with UI, file and docker manager, by me.</p>
+                <p>Developed by <strong>  <a href='https://ledocdev.com' target='_blank'>Darrell KIDJO</a></strong> - <strong>Software Engineer</strong> available for <strong>freelance or remote</strong> missions just <a href='https://ledocdev.com/#contact' target='_blank'>contact me</a>.</p>
+                <p>Discover <strong><a  href='https://serverexplorer.ledocdev.com' target='_blank'> Server Explorer</a></strong>, an <strong>ssh client</strong> with UI, file and docker manager, by me.</p>
                 <h4><strong>Thank you for using my tools ;)</strong></h4>
             </div>
         </div>`;
