@@ -20,7 +20,8 @@ const b = typeof chrome !== 'undefined' ? chrome : (typeof browser !== 'undefine
  })(); 
 
 function pageLoad() {
-    const autoScrollEnabled = localStorage.getItem('stackanswer-autoscroll-enabled') === 'true' || undefined;
+    console.log(localStorage.getItem('stackanswer-autoscroll-enabled'));
+    const autoScrollEnabled = localStorage.getItem('stackanswer-autoscroll-enabled') === 'true' || localStorage.getItem('stackanswer-autoscroll-enabled') === null;
     if (autoScrollEnabled) {
         let acceptedAnswer = acceptedAnswerExist();
         if(acceptedAnswer){
