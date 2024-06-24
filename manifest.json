@@ -1,7 +1,6 @@
 {
-    "manifest_version": 2,
+    "manifest_version": 3,
     "name": "StackAnswer",
-
     "version": "1.3",
     "description": "StackAnswer is a browser extension that allows users on stackoverflow to go directly to the most relevant answer.",
     "homepage_url": "https://github.com/mengodkidjo/stackanswer",
@@ -10,15 +9,10 @@
         "96": "icons/logo-96-bg.png"
     },
     
+    "host_permissions": [
+        "*://stackoverflow.com/questions/*"
+    ],
     "permissions": ["tabs"],
-    
-    "browser_specific_settings": {
-        "gecko": {
-            "id": "stackanswer@ledocdev.com",
-            "strict_min_version": "48.0"
-        }
-    },      
-
     "content_scripts": [
         {
             "matches": ["https://stackoverflow.com/questions/*"],
@@ -26,12 +20,15 @@
             "css": ["css/content_css.css"]
         }
     ],
-    "web_accessible_resources": [ "images/logo_long.png", "images/check.png", "images/minus.jpg", "icons/logo-48.png", "images/copy.png" ],
+    "web_accessible_resources": [
+        {
+            "matches": ["<all_urls>"],
+            "resources" : [ "images/logo_long.png", "images/check.png", "images/minus.jpg", "icons/logo-48.png", "images/copy.png" ]
 
+        }
+    ],
     "background": {
-        "scripts": ["js/background_script.js"],
-        "persistent": false
+        "service_worker": "js/background_script.js"
       }
-      
  
 }
