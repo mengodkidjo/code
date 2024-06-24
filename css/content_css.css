@@ -104,3 +104,7 @@
 .stackanswer-settings input[type='checkbox'] {
     margin-right: 10px;
 }
+
+blockquote {
+    overflow-wrap: break-word;
+}
