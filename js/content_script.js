@@ -1,12 +1,8 @@
 const b = typeof chrome !== 'undefined' ? chrome : (typeof browser !== 'undefined' ? browser : null);
+let noAnswer = false;
  (() => {
 
-    // if(window.hasRun){
-    //     // console.log("here ?");
-    //     return;
-    //   }
-    
-    // window.hasRun = true;
+   
 
     let alreadyRunPageLoad = false;
     window.onload = function () {
@@ -19,16 +15,30 @@ const b = typeof chrome !== 'undefined' ? chrome : (typeof browser !== 'undefine
        
  })(); 
 
+ b.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    // console.log("get message ");
+    if(request.action === "executeAutoScroll"){
+        console.log("get message execute");
+
+        pageLoad();
+    }
+ })
+
 function pageLoad() {
-    console.log(localStorage.getItem('stackanswer-autoscroll-enabled'));
-    const autoScrollEnabled = localStorage.getItem('stackanswer-autoscroll-enabled') === 'true' || localStorage.getItem('stackanswer-autoscroll-enabled') === null;
+    const autoScrollEnabled = localStorage.getItem('stackanswer-autoscroll-enabled') === 'true' || localStorage.getItem('stackanswer-autoscroll-enabled') === null || localStorage.getItem('stackanswer-autoscroll-enabled') === 'null';
     if (autoScrollEnabled) {
+        // console.log("true");
+
         let acceptedAnswer = acceptedAnswerExist();
         if(acceptedAnswer){
+            // console.log("accepted");
             goToAcceptedAnswer(acceptedAnswer)
         } else {
+            // console.log("mostVoted");
             goToMostVotedAnswer();
         }
+    } else {
+        console.log("false");
     }
 }
 
@@ -51,12 +61,12 @@ function switchAnswerHighliter(currentElement){
    
 }
 
-function goToMostVotedAnswer() {
+function mostVotedAnswerExist(){
     let allAnswers = document.getElementsByClassName("answer js-answer");
-    var mostVotedDiv = null;
+    var mostVotedDiv = false;
     for (let index = 0; index < allAnswers.length; index++) {
         const element = allAnswers[index];
-        if(mostVotedDiv == null){
+        if(mostVotedDiv == false){
             mostVotedDiv = element;
         } else {
             const mostVotedDivScore = parseInt(mostVotedDiv.getAttribute("data-score"));
@@ -73,10 +83,17 @@ function goToMostVotedAnswer() {
         
     }
 
-    if(mostVotedDiv != null){
+    return mostVotedDiv;
+
+}
+
+function goToMostVotedAnswer() {
+    let allAnswers = document.getElementsByClassName("answer js-answer");
+    var mostVotedDiv = mostVotedAnswerExist();
+    if(mostVotedDiv != false){
         switchAnswerHighliter(mostVotedDiv)
         mostVotedDiv.scrollIntoView({behavior: 'smooth', block: "center"});
-    }
+    } 
 }
       
 function acceptedAnswerExist() {
@@ -97,6 +114,7 @@ function showUi() {
     const activeClass = acceptedAnswerExists ? 'stackanswer-active' : '';
     const default2CheckIconClass = acceptedAnswerExists ? 'stackanswer-hide' : '';
     const default2ActiveClass = acceptedAnswerExists ? '' : 'stackanswer-active';
+    const anAnswerExist = mostVotedAnswerExist() || acceptedAnswerExist();
 
     // 
 
@@ -116,7 +134,8 @@ function showUi() {
                             Enable auto scroll to the most relevant answer
                         </label>
                     </div>
-                    <div> 
+                    ${anAnswerExist ? `
+                    <div id='stackanswer-actions-bloc'> 
                         <div id='stackanswer-action-accepted' class='${activeClass} stackanswer-action'>
                             <img id='stackanswer-check-icon-1' src='${checkLogo}' width='16px' class='${checkIconClass}'> 
                             <label>Jump to <strong> Accepted answer </strong></label> 
@@ -125,7 +144,17 @@ function showUi() {
                             <img id='stackanswer-check-icon-2' class='${default2CheckIconClass}' src='${checkLogo}' width='16px' > 
                             <label >Jump to  <strong>Most voted </strong></label> 
                         </div>
+                    </div>`: 
+                    `
+                    <div id='stackanswer-actions-bloc'> 
+                        <div id='stackanswer-action-accepted' class='stackanswer-accepted-not-found stackanswer-action'>
+                            <label>Jump to <strong> Accepted answer </strong></label> 
+                        </div> 
+                        <div id='stackanswer-action-voted' class='stackanswer-action stackanswer-accepted-not-found'>
+                            <label >Jump to  <strong>Most voted </strong></label> 
+                        </div>
                     </div>
+                    `}
         
         `;
     
@@ -149,7 +178,7 @@ function showUi() {
                     <h2>About</h2>
                 </div>
                 <p>Developed by <strong>  <a href='https://ledocdev.com' target='_blank'>Darrell KIDJO</a></strong> - <strong>Software Engineer</strong> available for <strong>freelance or remote</strong> missions just <a href='https://ledocdev.com/#contact' target='_blank'>contact me</a>.</p>
-                <p>Discover <strong><a  href='https://serverexplorer.ledocdev.com' target='_blank'> Server Explorer</a></strong>, an <strong>ssh client</strong> with UI, file and docker manager, by me.</p>
+                <p>Discover <strong><a  href='https://serverexplorer.ledocdev.com' target='_blank'> Server Explorer</a></strong>, an <strong>SSH Client</strong> with UI, file and docker manager, by me.</p>
                 <h4><strong>Thank you for using my tools ;)</strong></h4>
             </div>
         </div>`;
@@ -181,13 +210,16 @@ function showUi() {
     //Handle click event on button : Jump to Most Voted answer
 
     votedAction.addEventListener("click", (event)=>{
-        if(!votedAction.classList.contains("stackanswer-active")){
-            votedAction.classList.add("stackanswer-active")
-            accpetedAction.classList.remove("stackanswer-active")
-            document.getElementById('stackanswer-check-icon-2').classList.remove("stackanswer-hide")
-            document.getElementById('stackanswer-check-icon-1').classList.add("stackanswer-hide")
-            goToMostVotedAnswer();
+        if(mostVotedAnswerExist()){
+            if(!votedAction.classList.contains("stackanswer-active")){
+                votedAction.classList.add("stackanswer-active")
+                accpetedAction.classList.remove("stackanswer-active")
+                document.getElementById('stackanswer-check-icon-2').classList.remove("stackanswer-hide")
+                document.getElementById('stackanswer-check-icon-1').classList.add("stackanswer-hide")
+                goToMostVotedAnswer();
+            }
         }
+      
     });
 
     const question = document.getElementById("stackanswer-link");

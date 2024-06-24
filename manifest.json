@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "StackAnswer",
-    "version": "1.2",
+    "version": "1.3",
     "description": "StackAnswer is a browser extension that allows users on stackoverflow to go directly to the answer with either the checkmark or the most votes. Once on a page, the user will be presented with a box in the top right-hand corner, allowing him to navigate between the answers with the most votes or the one with the checkmark.",
     "homepage_url": "https://github.com/mengodkidjo/stackanswer",
     "icons": {
@@ -9,6 +9,7 @@
         "96": "icons/logo-96-bg.png"
     },
     
+    "permissions": ["tabs"],
     
     "browser_specific_settings": {
         "gecko": {
@@ -24,7 +25,12 @@
             "css": ["css/content_css.css"]
         }
     ],
-    "web_accessible_resources": [ "images/logo_long.png", "images/check.png", "images/minus.jpg", "icons/logo-48.png", "images/copy.png" ]
+    "web_accessible_resources": [ "images/logo_long.png", "images/check.png", "images/minus.jpg", "icons/logo-48.png", "images/copy.png" ],
 
+    "background": {
+        "scripts": ["js/background_script.js"],
+        "persistent": false
+      }
+      
  
 }
