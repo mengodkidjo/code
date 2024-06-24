@@ -26,6 +26,7 @@ let noAnswer = false;
 
 function pageLoad() {
     const autoScrollEnabled = localStorage.getItem('stackanswer-autoscroll-enabled') === 'true' || localStorage.getItem('stackanswer-autoscroll-enabled') === null || localStorage.getItem('stackanswer-autoscroll-enabled') === 'null';
+
     if (autoScrollEnabled) {
         // console.log("true");
 
@@ -179,6 +180,7 @@ function showUi() {
                 </div>
                 <p>Developed by <strong>  <a href='https://ledocdev.com' target='_blank'>Darrell KIDJO</a></strong> - <strong>Software Engineer</strong> available for <strong>freelance or remote</strong> missions just <a href='https://ledocdev.com/#contact' target='_blank'>contact me</a>.</p>
                 <p>Discover <strong><a  href='https://serverexplorer.ledocdev.com' target='_blank'> Server Explorer</a></strong>, an <strong>SSH Client</strong> with UI, file and docker manager, by me.</p>
+
                 <h4><strong>Thank you for using my tools ;)</strong></h4>
             </div>
         </div>`;
